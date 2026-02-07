@@ -16,11 +16,9 @@ Our focus was not just building models, but creating a solution that a business 
 - Ensured reliable demand signals before forecasting
 
 ### **Demand Forecasting**
-- Built a clean daily demand dataset per menu item
-- Forecasted short-term demand (up to **30 days ahead**) using historical trends and weekly patterns
-
-### **Ingredient Consumption Mapping**
-- Converted menu-item demand into ingredient-level usage using **Bill of Materials (BOM)** data
+- Built a clean, structured daily demand dataset at the menu-item level
+- Developed a customizable analytics dashboard with selectable daily, weekly, or monthly views
+- Forecasted short-term demand (up to 30 days ahead) using historical trends and recurring weekly patterns
 
 ### **Inventory Simulation**
 - Simulated future inventory levels day by day using forecasted consumption and inventory snapshots
@@ -32,7 +30,7 @@ Our focus was not just building models, but creating a solution that a business 
 - Suggested actions such as reordering early, reducing prep quantities, or discounting near-expiry items
 
 ### **Dashboard and Insights**
-- Displayed forecasts, inventory risks, and recommendations in a simple, easy-to-read interface
+- Displayed forecasts, inventory risks, and recommendations in an interactive, simple, easy-to-read interface
 
 ## **Technologies Used**
 
@@ -43,8 +41,8 @@ Our focus was not just building models, but creating a solution that a business 
 - **Linear Regression** as a baseline forecasting model
 - **Random Forest** to capture non-linear demand patterns
 - **XGBoost** for higher-performance forecasting and comparison
+- **LightGBM (LGBM)** - gradient boosting model optimized for efficient, high-accuracy forecasting
 
-- **Scikit-learn & XGBoost** for model training and evaluation
 - **GitHub** for version control and team collaboration
 
 ## **Installation**
@@ -73,7 +71,7 @@ Raw Transactional Data
 → Data Cleaning & Validation  
 → Demand Dataset Creation  
 → Demand Forecasting  
-→ Ingredient Consumption (BOM)  
+→ Ingredient Consumption  
 → Inventory Simulation  
 → Risk Scoring  
 → Business Recommendations
@@ -82,8 +80,8 @@ This modular structure keeps the solution easy to explain, maintain, and extend.
 
 ## **Team Contribution**
 
-All team members contributed **equally** across data preparation, modeling, analysis, and presentation.
-
+All team members contributed **equally** across data preparation, modeling, analysis, and presentation.  
+Due to technical issues, some members were unable to push directly to GitHub, so their contributions were committed by other teammates on their behalf. 
 ## **Final Note**
 
 FreshFlow AI was built with a **consulting mindset**: start from the business problem, work with imperfect real-world data, and deliver practical recommendations with measurable impact.
