@@ -2,48 +2,108 @@
 
 ## **Project Name and Description**
 
-**FreshFlow AI** is an inventory intelligence system built for the **Fresh Flow Markets** challenge in the **Deloitte x AUC Hackathon**.
+**FreshFlow AI** is an end-to-end inventory and demand intelligence platform built for the **Fresh Flow Markets** challenge in the **Deloitte x AUC Hackathon**.
 
-Fresh food businesses often face two costly problems at the same time: **waste from overstocking** and **lost sales from stockouts**. These issues usually come from reactive inventory decisions and poor demand visibility. FreshFlow AI helps solve this by forecasting short-term demand, translating it into ingredient-level consumption, and generating clear, data-backed recommendations that allow businesses to act before problems happen.
+Fresh food businesses struggle with two recurring problems: **waste caused by overstocking** and **lost revenue from stockouts**. These challenges are often driven by limited visibility into historical performance and short-term demand. FreshFlow AI addresses this by combining data cleaning, demand forecasting, and business analytics into a single interactive dashboard that helps decision-makers understand what is happening, what is likely to happen next, and what actions to take.
 
-Our focus was not just building models, but creating a solution that a business could actually use.
+Our focus was not just building predictive models, but delivering an **AI-assisted decision-support tool** that a business team could realistically use.
+
+---
 
 ## **Features**
 
-### **Data Preparation and Cleaning**
-- Handled missing and inconsistent IDs across tables
-- Safely merged transactional datasets and standardized numeric fields
-- Ensured reliable demand signals before forecasting
+All features listed below are accessible directly through the application’s navigation menu.
 
-### **Demand Forecasting**
-- Built a clean, structured daily demand dataset at the menu-item level
-- Developed a customizable analytics dashboard with selectable daily, weekly, or monthly views
-- Forecasted short-term demand (up to 30 days ahead) using historical trends and recurring weekly patterns
+### **Demand Prediction**
+- User selects a menu item and forecast horizon
+- Demand is predicted using:
+  - Linear Regression
+  - Random Forest
+  - LightGBM
+- The system displays individual model outputs and an averaged ensemble prediction to provide a balanced forecasttimereveperformanceforecaallmodelpredicttopinveite
 
-### **Inventory Simulation**
-- Simulated future inventory levels day by day using forecasted consumption and inventory snapshots
+  ![predictdemand](https://github.com/user-attachments/assets/e8ffe75c-5d19-477f-ac8d-1da56faf64e3)
 
-### **Risk Identification**
-- Flagged **stockout-risk** and **waste-risk** items based on inventory levels, expiry risk, and demand variability
 
-### **Actionable Recommendations**
-- Suggested actions such as reordering early, reducing prep quantities, or discounting near-expiry items
+### **KPI Dashboard & Impact Metrics**
+- High-level overview of key business KPIs
+- Profit & Loss analytics and operational performance indicators
+- Simulated business impact metrics to quantify improvements from data-driven decisions
 
-### **Dashboard and Insights**
-- Displayed forecasts, inventory risks, and recommendations in an interactive, simple, easy-to-read interface
+### **Performance & Historical Data**
+- Analysis of cleaned historical transactional data
+- Visualization of sales, quantities, and performance trends over time
+- Provides context and grounding for all downstream analytics
+
+  ![performanceandhistoricaldata](https://github.com/user-attachments/assets/5b9cb8a8-c37f-444a-80f9-de27ba45bb94)
+
+
+### **Model Performance Analytics**
+- Evaluation of forecasting models on held-out test data
+- Comparison of model accuracy using metrics such as **Mean Squared Error**
+- Visualization of model fit and performance to support transparent model selection
+
+![allmodelprediction](https://github.com/user-attachments/assets/a2e62aa5-00af-48c1-8393-09e2b06c0ed9)
+
+
+### **Business Analytics Dashboard**
+- Channel-level analysis of customer behavior
+  - Website vs mobile app
+  - Takeaway vs eat-in
+- Helps identify which channels drive volume and revenue
+  
+![ordertypeanalysis](https://github.com/user-attachments/assets/bfdb229e-922d-41e5-8e57-fb9d0a8a416e)
+
+
+### **AI Assistant (Chatbot)**
+- Interactive AI assistant connected to the cleaned dataset
+- Allows users to ask natural-language questions about the data
+- Designed to support quick exploration without manual analysis
+
+![aiassistant](https://github.com/user-attachments/assets/358e5ace-2ed7-46db-a6e2-4dbbda7a98b4)
+
+### **Prep Suggestions**
+- Uses forecasted demand to recommend preparation quantities
+- Designed to reduce over-prepping while maintaining service levels
+
+
+
+
+### **Top Sellers**
+- Identification of the highest-selling items based on historical data
+- Supports prioritization, planning, and inventory focus
+
+  ![topitems](https://github.com/user-attachments/assets/b521f1e6-12db-4dc1-bdbb-fe76734698db)
+
+
+### **Inventory Health**
+- Monitoring of inventory signals derived from forecasted consumption
+- Highlights potential risk areas requiring attention
+
+![inventoryhealthdashboard](https://github.com/user-attachments/assets/2d3180e4-7ac2-4955-9884-42b6e54c65a5)
+
+### **Bundle Ideas**
+- Identifies low-performing items and pairs them with strong sellers
+- Uses an association score based on item co-occurrence in orders
+- Designed to support promotions and reduce slow-moving stock
+
+---
 
 ## **Technologies Used**
 
-- **Python** for data processing, modeling, and analysis
-- **Pandas & NumPy** for data cleaning, aggregation, and feature engineering
+- **Python** – core language for data processing, modeling, and analysis  
+- **Pandas & NumPy** – data cleaning, aggregation, and feature engineering  
 
 ### **Machine Learning Models**
-- **Linear Regression** as a baseline forecasting model
-- **Random Forest** to capture non-linear demand patterns
-- **XGBoost** for higher-performance forecasting and comparison
-- **LightGBM (LGBM)** - gradient boosting model optimized for efficient, high-accuracy forecasting
+- **Linear Regression** – baseline demand forecasting  
+- **Random Forest** – captures non-linear demand patterns  
+- **LightGBM (LGBM)** – efficient gradient-boosted model for higher accuracy  
 
-- **GitHub** for version control and team collaboration
+### **Libraries & Tools**
+- **Streamlit** – interactive dashboard and user interface  
+- **GitHub** – version control and team collaboration  
+
+---
 
 ## **Installation**
 
@@ -52,7 +112,7 @@ Our focus was not just building models, but creating a solution that a business 
    git clone https://github.com/your-repo-name/freshflow-ai.git
    ```
 
-2. **Navigate to the project folder**
+2. **Navigate to the project directory**
    ```bash
    cd freshflow-ai
    ```
@@ -62,123 +122,43 @@ Our focus was not just building models, but creating a solution that a business 
    pip install -r requirements.txt
    ```
 
-4. **Set up environment variables** (for AI chatbot)
-   ```bash
-   cp .env.example .env
-   # Edit .env and add your API key
-   ```
+---
 
 ## **Usage**
 
-### Quick Start
-
-1. Place the provided datasets in the **data/** folder
-
-2. **Build the cache** (required before first run):
+1. Place the provided datasets in the `data/` directory  
+2. Run the data pipeline and model scripts to generate outputs  
+3. Launch the dashboard:
    ```bash
-   python scripts/build_cache.py
+   streamlit run app.py
    ```
-
-3. **Start the API server** (in one terminal):
-   ```bash
-   # Windows PowerShell
-   $env:PYTHONPATH = (Get-Location).Path; python -m src.main
-   
-   # Linux/Mac
-   PYTHONPATH=. python -m src.main
-   ```
-
-4. **Start the Streamlit UI** (in another terminal):
-   ```bash
-   python -m streamlit run src/app_streamlit.py
-   ```
-
-5. Open http://localhost:8501 in your browser
-
-## **Testing**
-
-We use **pytest** for testing. Tests are located in the `tests/` directory.
-
-### Running Tests
-
-```bash
-# Run all tests
-pytest tests/ -v
-
-# Run specific test file
-pytest tests/test_api_endpoints.py -v
-
-# Run tests with coverage report
-pytest tests/ --cov=src --cov-report=html
-
-# Run only fast tests (skip slow/integration tests)
-pytest tests/ -v -m "not slow"
-```
-
-### Test Structure
-
-```
-tests/
-├── conftest.py              # Shared fixtures and pytest configuration
-├── test_helpers.py          # Tests for utility functions
-├── test_inventory_service.py # Tests for inventory service
-├── test_api_endpoints.py    # Tests for API endpoints
-├── test_chatbot.py          # Tests for AI chatbot service
-└── test_cache_builder.py    # Tests for P&L and KPI calculations
-```
-
-### Writing New Tests
-
-1. Create a new file in `tests/` named `test_<feature>.py`
-2. Use pytest fixtures for setup/teardown
-3. Group related tests in classes
-4. Use descriptive test names: `test_<what>_<expected_behavior>`
-
-Example:
-```python
-import pytest
-
-class TestMyFeature:
-    def test_feature_returns_expected_value(self):
-        result = my_function(input)
-        assert result == expected
-```
-
-## **Architecture**
-
-**FreshFlow AI** follows a clear end-to-end flow:
-
-Raw Transactional Data  
-→ Data Cleaning & Validation  
-→ Demand Dataset Creation  
-→ Demand Forecasting  
-→ Ingredient Consumption  
-→ Inventory Simulation  
-→ Risk Scoring  
-→ Business Recommendations
-
-This modular structure keeps the solution easy to explain, maintain, and extend.
-
-## **Team Contribution**
-
-All team members contributed **equally** across data preparation, modeling, analysis, and presentation.  
-Due to technical issues, some members were unable to push directly to GitHub, so their contributions were committed by other teammates on their behalf. 
-## **Final Note**
-
-FreshFlow AI was built with a **consulting mindset**: start from the business problem, work with imperfect real-world data, and deliver practical recommendations with measurable impact.
-
-*(Update with your team and run `git shortlog -sn --all` to check contribution distribution.)*
+4. Use the navigation panel to explore KPIs, analytics dashboards, predictions, and recommendations interactively
 
 ---
 
-## Data & Business Value
+## **Architecture**
 
-- **Data:** Merged order-level data (item, quantity, date, place, order_id) and item popularity (`sorted_most_ordered`). See `docs/DATA_INVESTIGATION_AND_PLAN.md` for column list and usage.
-- **Business questions addressed:**
-  - **Daily/weekly/monthly demand** → prediction endpoint and prep suggestions
-  - **Prep quantities to minimize waste** → prep suggestions with safety factor
-  - **Prioritization** → top items and reorder points (expiry-based prioritization would require an expiry data source)
-  - **Promotions/bundles** → bundle suggestions from co-occurrence in orders
-  - **External factors** → date is available for weekend/holiday features; weather could be added via external API
+FreshFlow AI follows a modular, end-to-end architecture:
 
-All monetary values in the source data are in **DKK**.
+Raw Transactional Data  
+→ Data Cleaning & Validation  
+→ Exploratory & Business Analytics  
+→ Demand Forecasting Models  
+→ Ensemble Predictions  
+→ Inventory & Bundle Insights  
+→ Interactive Dashboard (Streamlit)
+
+This structure keeps the solution easy to explain, maintain, and extend.
+
+---
+
+## **Team Members**
+
+All team members contributed across **data preparation, modeling, analytics, UI development, and presentation**.  
+Work was distributed collaboratively to ensure coverage of both technical implementation and business framing.
+
+---
+
+## **Final Note**
+
+FreshFlow AI was built with a **consulting mindset**: start from a real business problem, work with imperfect real-world data, and deliver insights that are explainable, actionable, and aligned with business decision-making.
