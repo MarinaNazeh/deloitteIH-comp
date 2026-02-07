@@ -30,6 +30,12 @@ All features listed below are accessible directly through the application’s na
 - Profit & Loss analytics and operational performance indicators
 - Simulated business impact metrics to quantify improvements from data-driven decisions
 
+
+![WhatsApp Image 2026-02-07 at 11 39 37 PM](https://github.com/user-attachments/assets/9404ea2f-9e54-48a1-bb95-0c79daeb7377)
+![WhatsApp Image 2026-02-07 at 11 39 37 PM (1)](https://github.com/user-attachments/assets/45e9269e-537b-47cc-8181-49b737c1747d)
+
+
+
 ### **Performance & Historical Data**
 - Analysis of cleaned historical transactional data
 - Visualization of sales, quantities, and performance trends over time
@@ -66,7 +72,7 @@ All features listed below are accessible directly through the application’s na
 - Uses forecasted demand to recommend preparation quantities
 - Designed to reduce over-prepping while maintaining service levels
 
-
+![WhatsApp Image 2026-02-07 at 11 42 10 PM](https://github.com/user-attachments/assets/6eb626bb-b908-42c4-bb87-1d158af099b3)
 
 
 ### **Top Sellers**
@@ -86,6 +92,10 @@ All features listed below are accessible directly through the application’s na
 - Identifies low-performing items and pairs them with strong sellers
 - Uses an association score based on item co-occurrence in orders
 - Designed to support promotions and reduce slow-moving stock
+  ![WhatsApp Image 2026-02-07 at 11 40 30 PM](https://github.com/user-attachments/assets/db03c15d-6b2b-4cdd-b6c6-2b7d6bc36a2c)
+  ![WhatsApp Image 2026-02-07 at 11 41 17 PM](https://github.com/user-attachments/assets/2f74e5a7-6ac3-46dc-8bdb-dfae5435e6d8)
+
+
 
 ---
 
@@ -105,36 +115,129 @@ All features listed below are accessible directly through the application’s na
 
 ---
 
-## **Installation**
+## **Installation, Setup, & Usage **
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/your-repo-name/freshflow-ai.git
-   ```
-
-2. **Navigate to the project directory**
-   ```bash
-   cd freshflow-ai
-   ```
-
-3. **Install dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
+Follow the steps below to set up and run **FreshFlow AI** locally.
 
 ---
 
-## **Usage**
+### **1. Clone the Repository**
 
-1. Place the provided datasets in the `data/` directory  
-2. Run the data pipeline and model scripts to generate outputs  
-3. Launch the dashboard:
-   ```bash
-   streamlit run app.py
-   ```
-4. Use the navigation panel to explore KPIs, analytics dashboards, predictions, and recommendations interactively
+```bash
+git clone https://github.com/MarinaNazeh/deloitteIH-comp.git
+```
 
 ---
+
+### **2. Prepare the Dataset**
+
+1. Place the provided `data.zip` file inside the project root directory  
+2. Extract the ZIP file  
+3. Ensure that all CSV files are located inside a folder named `data/`
+
+Your project structure should look like this:
+```
+freshflow-ai/
+├── data/
+│   ├── *.csv
+├── src/
+├── requirements.txt
+└── README.md
+```
+
+---
+
+### **3. Install Dependencies**
+
+Make sure you are using Python 3.9+.
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+### **4. Set the Python Path**
+
+This ensures the project modules are correctly resolved.
+
+**Windows (Command Prompt):**
+```cmd
+set PYTHONPATH=%CD%
+```
+
+**Windows (PowerShell):**
+```powershell
+$env:PYTHONPATH = (Get-Location).Path
+```
+
+---
+
+## **Running the Project**
+
+### **1. Run the Data Pipeline**
+
+This step performs data loading, cleaning, feature engineering, and forecasting.
+
+```bash
+python -m src.main
+```
+
+This will generate the processed outputs used by the dashboard.
+
+---
+
+### **2. Launch the Streamlit Dashboard**
+
+```bash
+python -m streamlit run src/app_streamlit.py
+```
+
+Once running, the application will open automatically in your browser.
+
+Use the navigation panel to explore:
+- KPI Dashboard & Impact Metrics
+- Performance & Business Analytics
+- Demand Predictions
+- Inventory & Replenishment Recommendations
+- AI-powered Chatbot
+
+---
+
+## **Chat API Configuration (Optional)**
+
+The AI assistant requires an API key to function.
+
+### **1. Create a `.env` File**
+
+In the project root directory, create a file named `.env`.
+
+### **2. Add the Configuration Below**
+
+Replace the placeholder values with your own API credentials.
+
+```env
+# API Key for the chat model (required for chatbot functionality)
+CHAT_API_KEY=your_api_key_here
+
+# API Base URL (optional – defaults to OpenAI-style APIs)
+# Examples:
+# Groq: https://api.groq.com/openai/v1
+# OpenRouter: https://openrouter.ai/api/v1
+# Local models: your local endpoint
+CHAT_API_BASE=https://api.groq.com/openai/v1
+
+# Model name
+CHAT_MODEL=moonshotai/kimi-k2-instruct-0905
+```
+
+### **3. Restart the Dashboard**
+
+After saving the `.env` file, restart the Streamlit app for the changes to take effect.
+
+---
+
+
 
 ## **Architecture**
 
@@ -152,14 +255,12 @@ This structure keeps the solution easy to explain, maintain, and extend.
 
 ---
 
-## **Team Members Contributions**
-
-All team members contributed across **data preparation, modeling, analytics, UI development, and presentation**.  
-Work was distributed collaboratively to ensure coverage of both technical implementation and business framing.
+## **Team Members**
 
 Marina and Mariam were responsible for data cleaning, data merging, preprocessing, and the development of the dashboard.
 
-Sama, AbdelRahman, and Argeed implemented the modeling phase, including the Linear Regression, LightGBM (LGBM), Random Forest, ensemble models, as well as the inventory management code.
+Sama, AbdelRahman, and Areeg implemented the modeling phase, including the Linear Regression, LightGBM (LGBM), Random Forest, ensemble models, as well as the inventory management code.
+
 ---
 
 ## **Final Note**
