@@ -60,7 +60,10 @@ Our focus was not just building models, but creating a solution that a business 
 
 ## **Usage**
 
-   ????
+1. Place the provided datasets in the **data/** folder
+2. Run the main pipeline:
+   python src/run_freshflow_pipeline.py
+3. Review the outputs in the **outputs/** folder or dashboard, including demand forecasts, inventory risk tables, and recommendations
 
 ## **Architecture**
 
