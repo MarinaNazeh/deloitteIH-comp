@@ -152,11 +152,14 @@ This structure keeps the solution easy to explain, maintain, and extend.
 
 ---
 
-## **Team Members**
+## **Team Members Contributions**
 
 All team members contributed across **data preparation, modeling, analytics, UI development, and presentation**.  
 Work was distributed collaboratively to ensure coverage of both technical implementation and business framing.
 
+Marina and Mariam were responsible for data cleaning, data merging, preprocessing, and the development of the dashboard.
+
+Sama, AbdelRahman, and Argeed implemented the modeling phase, including the Linear Regression, LightGBM (LGBM), Random Forest, ensemble models, as well as the inventory management code.
 ---
 
 ## **Final Note**
