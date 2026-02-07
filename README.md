@@ -135,15 +135,6 @@ git clone https://github.com/MarinaNazeh/deloitteIH-comp.git
 2. Extract the ZIP file  
 3. Ensure that all CSV files are located inside a folder named `data/`
 
-Your project structure should look like this:
-```
-freshflow-ai/
-├── data/
-│   ├── *.csv
-├── src/
-├── requirements.txt
-└── README.md
-```
 
 ---
 
