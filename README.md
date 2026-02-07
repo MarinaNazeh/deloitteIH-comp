@@ -1,199 +1,92 @@
-# Fresh Flow Insights
+# **FreshFlow AI**
 
-**Deloitte x AUC Hackathon – Use Case 1: Fresh Flow Markets (Inventory Management)**
+## **Project Name and Description**
 
-A data-driven solution for demand forecasting, prep quantity suggestions, and bundle recommendations to reduce waste and stockouts. Built on merged order data and item popularity.
+**FreshFlow AI** is an inventory intelligence system built for the **Fresh Flow Markets** challenge in the **Deloitte x AUC Hackathon**.
 
----
+Fresh food businesses often face two costly problems at the same time: **waste from overstocking** and **lost sales from stockouts**. These issues usually come from reactive inventory decisions and poor demand visibility. FreshFlow AI helps solve this by forecasting short-term demand, translating it into ingredient-level consumption, and generating clear, data-backed recommendations that allow businesses to act before problems happen.
 
-## Project Name & Description
+Our focus was not just building models, but creating a solution that a business could actually use.
 
-**Fresh Flow Insights** helps restaurant and grocery operators balance inventory by:
+## **Features**
 
-- **Predicting demand** (daily, weekly, monthly) per item and optionally per store
-- **Suggesting prep quantities** for top-selling items with a configurable safety factor
-- **Recommending reorder points** based on recent demand and lead time
-- **Surfacing bundle opportunities** (items often bought together) for promotions
+### **Data Preparation and Cleaning**
+- Handled missing and inconsistent IDs across tables
+- Safely merged transactional datasets and standardized numeric fields
+- Ensured reliable demand signals before forecasting
 
-The system uses historical order data from `merged_complete` (order lines with store and item info) and `sorted_most_ordered` (item popularity) to drive forecasts and prep lists.
+### **Demand Forecasting**
+- Built a clean daily demand dataset per menu item
+- Forecasted short-term demand (up to **30 days ahead**) using historical trends and weekly patterns
 
----
+### **Ingredient Consumption Mapping**
+- Converted menu-item demand into ingredient-level usage using **Bill of Materials (BOM)** data
 
-## Features
+### **Inventory Simulation**
+- Simulated future inventory levels day by day using forecasted consumption and inventory snapshots
 
-| Feature | Description | API / UI |
-|--------|-------------|----------|
-| **Demand prediction** | Predicted quantity for an item (daily/weekly/monthly), optionally by place | `POST /api/inventory/predict` |
-| **Prep suggestions** | Top N items with suggested prep quantity (demand × safety factor) | `GET/POST /api/inventory/prep` |
-| **Reorder point** | Recommended reorder point for an item given lead time | `GET /api/inventory/reorder/<item_id>` |
-| **Demand summary** | Total quantity, unique items, date range (optional filters) | `GET /api/demand/summary` |
-| **Top items** | Most popular items by order count or by demand in dataset | `GET /api/items/top` |
-| **Bundle suggestions** | Pairs of items frequently bought together | `GET /api/bundles/suggestions` |
-| **Full recommendations** | One-item summary: demand, reorder point, status | `GET /api/inventory/recommendations/<item_id>` |
+### **Risk Identification**
+- Flagged **stockout-risk** and **waste-risk** items based on inventory levels, expiry risk, and demand variability
 
-**UI:** A Streamlit dashboard (`src/app_streamlit.py`) provides forms and tables for prediction, prep suggestions, top items, and bundles. Start the API first, then run Streamlit.
+### **Actionable Recommendations**
+- Suggested actions such as reordering early, reducing prep quantities, or discounting near-expiry items
 
----
+### **Dashboard and Insights**
+- Displayed forecasts, inventory risks, and recommendations in a simple, easy-to-read interface
 
-## Technologies Used
+## **Technologies Used**
 
-- **Python 3.x**
-- **pandas, numpy** – data loading and aggregation
-- **Flask** – REST API
-- **Streamlit** – optional web UI
-- **requests** – API client from Streamlit app
-- **pytest** – tests
+- **Python** for data processing, modeling, and analysis
+- **Pandas & NumPy** for data cleaning, aggregation, and feature engineering
 
-No external APIs; all logic uses the provided CSV data.
+### **Machine Learning Models**
+- **Linear Regression** as a baseline forecasting model
+- **Random Forest** to capture non-linear demand patterns
+- **XGBoost** for higher-performance forecasting and comparison
 
----
+- **Scikit-learn & XGBoost** for model training and evaluation
+- **GitHub** for version control and team collaboration
 
-## Installation
+## **Installation**
 
-1. **Clone and enter the project**
-   ```bash
-   cd path/to/deloitteIH-comp
-   ```
+1. **Clone the repository**
+   git clone https://github.com/your-repo-name/freshflow-ai.git
 
-2. **Create a virtual environment (recommended)**
-   ```bash
-   python -m venv venv
-   venv\Scripts\activate   # Windows
-   # source venv/bin/activate  # Linux/macOS
-   ```
+2. **Navigate to the project folder**
+   cd freshflow-ai
 
 3. **Install dependencies**
-   ```bash
    pip install -r requirements.txt
-   ```
 
-4. **Data**
-   - Place `merged_complete_part1.csv` … `merged_complete_part10.csv` and `sorted_most_ordered.csv` in the **`data/`** folder.
-   - By default only **one part** is loaded for fast startup. To use more data, set `MAX_MERGED_PARTS` in `config/settings.py` or load more parts in code.
+## **Usage**
 
----
+1. Place the provided datasets in the **data/** folder
+2. Run the main pipeline:
+   python src/run_freshflow_pipeline.py
+3. Review the outputs in the **outputs/** folder or dashboard, including demand forecasts, inventory risk tables, and recommendations
 
-## How to run the whole system
+## **Architecture**
 
-Everything is **precomputed** into a **cache**. You build the cache once, then the API and UI only read from it (no slow first load).
+**FreshFlow AI** follows a clear end-to-end flow:
 
-### Step 1 — One-time setup
+Raw Transactional Data  
+→ Data Cleaning & Validation  
+→ Demand Dataset Creation  
+→ Demand Forecasting  
+→ Ingredient Consumption (BOM)  
+→ Inventory Simulation  
+→ Risk Scoring  
+→ Business Recommendations
 
-1. **Install dependencies:** `pip install -r requirements.txt`
-2. **Put data in `data/`:** `merged_complete_part1.csv` (and optionally more parts), `sorted_most_ordered.csv`
-3. **Build the cache** (run once; takes 1–2 minutes):
+This modular structure keeps the solution easy to explain, maintain, and extend.
 
-```bash
-cd path\to\deloitteIH-comp
-set PYTHONPATH=%CD%        # Windows
-python scripts/build_cache.py
-```
+## **Team Contribution**
 
-This writes `cache/demand_daily.csv`, `cache/items.csv`, `cache/order_items.csv`, `cache/summary.json`, `cache/demand_history.json`. The API and UI use these only.
+All team members contributed **equally** across data preparation, modeling, analysis, and presentation.
 
-4. **(Optional)** Train models: `python scripts/train_demand_models.py`
+## **Final Note**
 
-### Step 2 — Run the app
-
-**Option A — One command (Windows)**  
-Double‑click **`run.bat`** or:
-
-```bash
-run.bat
-```
-
-Starts the API in a new window, then the Streamlit UI. Open **http://localhost:8501**.
-
-**Option B — Two terminals**
-
-**Terminal 1 — API:**
-```bash
-set PYTHONPATH=%CD%
-python -m src.main
-```
-
-**Terminal 2 — UI:**
-```bash
-set PYTHONPATH=%CD%
-python -m streamlit run src/app_streamlit.py
-```
-
-Open **http://localhost:8501**. The API loads from `cache/` and starts quickly.
-
----
-
-## Usage (details)
-
-### API only
-
-From the project root:
-
-```bash
-set PYTHONPATH=%CD%   # Windows
-python -m src.main
-```
-
-API runs at **http://127.0.0.1:5000**.
-
-### Streamlit UI only (API must be running)
-
-```bash
-set PYTHONPATH=%CD%
-python -m streamlit run src/app_streamlit.py
-```
-
-Open the URL shown in the terminal (e.g. http://localhost:8501).
-
-### Example API calls
-
-- **Health:** `GET http://127.0.0.1:5000/api/health`
-- **Predict demand:** `POST http://127.0.0.1:5000/api/inventory/predict`  
-  Body: `{"item_id": 5936269, "period": "daily"}`
-- **Prep suggestions:** `GET http://127.0.0.1:5000/api/inventory/prep?top_n=20`
-- **Top items:** `GET http://127.0.0.1:5000/api/items/top?n=50`
-- **Bundles:** `GET http://127.0.0.1:5000/api/bundles/suggestions?top_n=10`
-
----
-
-## Architecture
-
-```
-Project root
-├── config/settings.py      # Paths, MERGED_COLS, MAX_MERGED_PARTS
-├── src/
-│   ├── main.py             # Entry point → Flask app
-│   ├── api/routes.py       # Flask routes, lazy init of service
-│   ├── models/data_loader.py   # Load merged parts + sorted_most_ordered, build demand_daily
-│   ├── services/inventory_service.py  # Predict, prep, reorder, top items, bundles
-│   ├── utils/helpers.py   # Date parsing (DD/MM/YYYY), aggregation
-│   └── app_streamlit.py    # Streamlit UI (calls API)
-├── tests/
-│   └── test_helpers.py    # Unit tests for helpers
-└── docs/
-    ├── DATA_INVESTIGATION_AND_PLAN.md
-    └── merged_columns.txt
-```
-
-**Flow:**  
-`routes.py` lazily creates a `DataLoader` (using the `data/` folder), loads demand aggregates and `sorted_most_ordered`, then builds an `InventoryService`. Each endpoint calls into the service for predictions, prep list, reorder point, top items, or bundle pairs.
-
----
-
-## Testing
-
-From project root (with `PYTHONPATH` set to project root):
-
-```bash
-pytest tests/ -v
-```
-
----
-
-## Team Members
-
-| Name | Role | Contributions |
-|------|------|---------------|
-| *[Add names]* | *[Role]* | *[Contributions]* |
+FreshFlow AI was built with a **consulting mindset**: start from the business problem, work with imperfect real-world data, and deliver practical recommendations with measurable impact.
 
 *(Update with your team and run `git shortlog -sn --all` to check contribution distribution.)*
 
