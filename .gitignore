@@ -1,0 +1,15 @@
+# Cache (precomputed data; rebuild with scripts/build_cache.py)
+cache/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+*.egg-info/
+
+# IDE
+.idea/
+.vscode/
+.DS_Store

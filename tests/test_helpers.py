@@ -23,7 +23,8 @@ from src.utils.helpers import (
     convert_unix_timestamp,
     calculate_percentage_change,
     categorize_performance,
-    format_currency
+    format_currency,
+    parse_order_date,
 )
 
 
@@ -101,6 +102,21 @@ class TestHelpers:
         result = format_currency(1250.50, 'USD')
         
         assert result == 'USD 1,250.50'
+
+    def test_parse_order_date_string(self):
+        """Test parsing DD/MM/YYYY HH:MM date strings."""
+        s = pd.Series(["12/02/2021 14:17", "13/02/2021 16:00"])
+        result = parse_order_date(s)
+        assert result.iloc[0].year == 2021
+        assert result.iloc[0].month == 2
+        assert result.iloc[0].day == 12
+
+    def test_parse_order_date_unix(self):
+        """Test parsing UNIX timestamp (2021-01-01 00:00:00 UTC)."""
+        s = pd.Series([1609459200])
+        result = parse_order_date(s)
+        assert result.iloc[0].year == 2021
+        assert result.iloc[0].month == 1
 
 
 # Run tests if executed directly
