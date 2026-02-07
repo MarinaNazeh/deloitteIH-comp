@@ -218,6 +218,18 @@ def predict_ensemble(
     artifacts: Dict[str, Any],
 ) -> np.ndarray:
     """Predict using ensemble (average of LR, RF, LightGBM). X must have feature_cols."""
+    preds = predict_all_models(X, artifacts)
+    return preds["ensemble"]
+
+
+def predict_all_models(
+    X: pd.DataFrame,
+    artifacts: Dict[str, Any],
+) -> Dict[str, np.ndarray]:
+    """
+    Predict using all models individually and return dict with each model's prediction.
+    Returns: {"linear_regression": [...], "random_forest": [...], "lightgbm": [...], "ensemble": [...]}
+    """
     feature_cols = artifacts["feature_cols"]
     X = X[[c for c in feature_cols if c in X.columns]].copy()
     for c in feature_cols:
@@ -226,7 +238,9 @@ def predict_ensemble(
     X = X[feature_cols].fillna(0)
 
     scaler = artifacts["scaler"]
-    lr, rf, lgbm = artifacts["models"]["linear_regression"], artifacts["models"]["random_forest"], artifacts["models"]["lightgbm"]
+    lr = artifacts["models"]["linear_regression"]
+    rf = artifacts["models"]["random_forest"]
+    lgbm = artifacts["models"]["lightgbm"]
 
     X_scaled = scaler.transform(X)
     pred_lr = np.maximum(0, lr.predict(X_scaled))
@@ -236,4 +250,11 @@ def predict_ensemble(
     else:
         pred_lgb = np.maximum(0, lgbm.predict(X))
 
-    return np.maximum(0, (pred_lr + pred_rf + pred_lgb) / 3.0)
+    pred_ensemble = np.maximum(0, (pred_lr + pred_rf + pred_lgb) / 3.0)
+
+    return {
+        "linear_regression": pred_lr,
+        "random_forest": pred_rf,
+        "lightgbm": pred_lgb,
+        "ensemble": pred_ensemble,
+    }

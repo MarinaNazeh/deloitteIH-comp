@@ -50,20 +50,101 @@ Our focus was not just building models, but creating a solution that a business 
 ## **Installation**
 
 1. **Clone the repository**
+   ```bash
    git clone https://github.com/your-repo-name/freshflow-ai.git
+   ```
 
 2. **Navigate to the project folder**
+   ```bash
    cd freshflow-ai
+   ```
 
 3. **Install dependencies**
+   ```bash
    pip install -r requirements.txt
+   ```
+
+4. **Set up environment variables** (for AI chatbot)
+   ```bash
+   cp .env.example .env
+   # Edit .env and add your API key
+   ```
 
 ## **Usage**
 
+### Quick Start
+
 1. Place the provided datasets in the **data/** folder
-2. Run the main pipeline:
-   python src/run_freshflow_pipeline.py
-3. Review the outputs in the **outputs/** folder or dashboard, including demand forecasts, inventory risk tables, and recommendations
+
+2. **Build the cache** (required before first run):
+   ```bash
+   python scripts/build_cache.py
+   ```
+
+3. **Start the API server** (in one terminal):
+   ```bash
+   # Windows PowerShell
+   $env:PYTHONPATH = (Get-Location).Path; python -m src.main
+   
+   # Linux/Mac
+   PYTHONPATH=. python -m src.main
+   ```
+
+4. **Start the Streamlit UI** (in another terminal):
+   ```bash
+   python -m streamlit run src/app_streamlit.py
+   ```
+
+5. Open http://localhost:8501 in your browser
+
+## **Testing**
+
+We use **pytest** for testing. Tests are located in the `tests/` directory.
+
+### Running Tests
+
+```bash
+# Run all tests
+pytest tests/ -v
+
+# Run specific test file
+pytest tests/test_api_endpoints.py -v
+
+# Run tests with coverage report
+pytest tests/ --cov=src --cov-report=html
+
+# Run only fast tests (skip slow/integration tests)
+pytest tests/ -v -m "not slow"
+```
+
+### Test Structure
+
+```
+tests/
+├── conftest.py              # Shared fixtures and pytest configuration
+├── test_helpers.py          # Tests for utility functions
+├── test_inventory_service.py # Tests for inventory service
+├── test_api_endpoints.py    # Tests for API endpoints
+├── test_chatbot.py          # Tests for AI chatbot service
+└── test_cache_builder.py    # Tests for P&L and KPI calculations
+```
+
+### Writing New Tests
+
+1. Create a new file in `tests/` named `test_<feature>.py`
+2. Use pytest fixtures for setup/teardown
+3. Group related tests in classes
+4. Use descriptive test names: `test_<what>_<expected_behavior>`
+
+Example:
+```python
+import pytest
+
+class TestMyFeature:
+    def test_feature_returns_expected_value(self):
+        result = my_function(input)
+        assert result == expected
+```
 
 ## **Architecture**
 

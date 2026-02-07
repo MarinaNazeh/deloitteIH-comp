@@ -23,5 +23,7 @@ MAX_MERGED_PARTS = 1
 # Columns we need from merged (to reduce memory)
 MERGED_COLS = [
     "item_id", "order_id", "quantity", "price", "cost", "title",
-    "created_order", "place_id", "status_order", "type"
+    "created_order", "place_id", "status_order", "type",
+    # Business analytics columns
+    "channel", "payment_method", "source", "total_amount",
 ]

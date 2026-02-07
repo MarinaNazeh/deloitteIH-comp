@@ -1,6 +1,9 @@
 # Cache (precomputed data; rebuild with scripts/build_cache.py)
 cache/
 
+# Environment variables (contains secrets)
+.env
+
 # Python
 __pycache__/
 *.py[cod]
